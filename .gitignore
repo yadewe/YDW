@@ -42,4 +42,10 @@ Network Trash Folder
 Temporary Items
 .apdisk
 *.suo
-YDW/YDW.Utility/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+YDW/YDW.Utility/obj/*
+YDW/YDW.WinService/obj/*
+YDW/YDW.WinService/bin/*
+YDW/YDW.Utility/bin/*
+YDW/YDW.Sample/bin/*
+YDW/packages/*
+YDW/YDW.Sample/obj/*

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace YDW.Utility.Entity
 {
-    public class EntityHelper
+    public static class EntityHelper
     {
         /// <summary>
         /// 类型转换，复制同名的字段值

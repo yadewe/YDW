@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YDW.Utility", "YDW.Utility\YDW.Utility.csproj", "{E09463B6-FA35-4CCD-B434-7B772C99C1D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YDW.Sample", "YDW.Sample\YDW.Sample.csproj", "{BD7F183B-D22A-468D-B273-214CEEC35EF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YDW.WinService", "YDW.WinService\YDW.WinService.csproj", "{4B440467-9DAD-48B9-99DC-86C10007A6C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +17,14 @@ Global
 		{E09463B6-FA35-4CCD-B434-7B772C99C1D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E09463B6-FA35-4CCD-B434-7B772C99C1D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E09463B6-FA35-4CCD-B434-7B772C99C1D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD7F183B-D22A-468D-B273-214CEEC35EF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD7F183B-D22A-468D-B273-214CEEC35EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD7F183B-D22A-468D-B273-214CEEC35EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD7F183B-D22A-468D-B273-214CEEC35EF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B440467-9DAD-48B9-99DC-86C10007A6C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B440467-9DAD-48B9-99DC-86C10007A6C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B440467-9DAD-48B9-99DC-86C10007A6C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B440467-9DAD-48B9-99DC-86C10007A6C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
