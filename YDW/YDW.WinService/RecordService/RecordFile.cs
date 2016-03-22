@@ -10,7 +10,7 @@ namespace YDW.WinService
     public class RecordFile
     {
 
-        string path = @"D:\david\Test\ServiceRun/data.log";
+        string path = @"D:\david\Test\ServiceRun/YDWdata.log";
         public List<RecordInfo> Items { get; set; }
         public RecordInfo LastRecordInfo
         {
@@ -280,12 +280,16 @@ namespace YDW.WinService
             }
         }
 
-        private const string _matchPattern = "--RI--([^-]*)----([^-]*)----([^-]*)----([^-]*)----([^-]*)----";
-        private const string _formatString = "--RI--{0}----{1}----{2}----{3}----{4}----";
+        private static readonly Reader[] _readers =  {
+            new Reader2(),
+            new Reader1() // v1.0.1
+        };
+
+
 
         public static bool IsRecordInfo(string infoString)
         {
-            return Regex.IsMatch(infoString, _matchPattern);
+            return _readers.Any(p => p.IsMatch(infoString));
         }
 
         public RecordInfo()
@@ -302,10 +306,11 @@ namespace YDW.WinService
             else
             {
                 IsRemark = false;
-                var match = Regex.Match(infoString, _matchPattern);
+                var reader = _readers.First(p => p.IsMatch(infoString));
 
-                Start = DateTime.Parse(match.Groups[1].Value + " " + match.Groups[2].Value);
-                Stop = DateTime.Parse(match.Groups[1].Value + " " + match.Groups[3].Value);
+                var info = reader.Read(infoString);
+                Start = info.Start;
+                Stop = info.Stop;
             }
         }
 
@@ -314,17 +319,84 @@ namespace YDW.WinService
             if (IsRemark)
                 return Remark;
             else
-                return string.Format(_formatString,
-                    Start.HasValue ? Start.Value.ToString("yyyy/MM/dd") : null,
-                     Start.HasValue ? Start.Value.ToString("HH:mm:ss") : null,
-                     Stop.HasValue ? Stop.Value.ToString("HH:mm:ss") : null,
-                     SpanStr,
-                     TotalMonthLateStr
-                    );
+                return _readers.First().Write(this);
         }
     }
-    public class TextInfo
+
+    public abstract class Reader
     {
-        public string Text;
+        protected string ReadPattern;
+        protected string WritePattern;
+
+        public abstract RecordInfo Read(string infoString);
+        public abstract string Write(RecordInfo info);
+        public bool IsMatch(string infoString)
+        {
+            return Regex.IsMatch(infoString, ReadPattern);
+        }
+    }
+
+    // v1.0.1
+    public class Reader1 : Reader
+    {
+        public Reader1()
+        {
+            ReadPattern = "--RI--([^-]*)----([^-]*)----([^-]*)----([^-]*)----([^-]*)----$";
+            WritePattern = "--RI--{0}----{1}----{2}----{3}----{4}----";
+        }
+
+        public override RecordInfo Read(string infoString)
+        {
+            RecordInfo info = new RecordInfo();
+            var match = Regex.Match(infoString, ReadPattern);
+            info.Start = DateTime.Parse(match.Groups[1].Value + " " + match.Groups[2].Value);
+            info.Stop = DateTime.Parse(match.Groups[1].Value + " " + match.Groups[3].Value);
+
+            return info;
+        }
+
+        public override string Write(RecordInfo info)
+        {
+            return string.Format(WritePattern,
+                    info.Start.HasValue ? info.Start.Value.ToString("yyyy/MM/dd") : null,
+                    info.Start.HasValue ? info.Start.Value.ToString("HH:mm:ss") : null,
+                    info.Stop.HasValue ? info.Stop.Value.ToString("HH:mm:ss") : null,
+                    info.SpanStr,
+                    info.TotalMonthLateStr
+                    );
+        }
+
+    }
+
+    // v1.0.2
+    public class Reader2 : Reader
+    {
+        public Reader2()
+        {
+            ReadPattern = "--RI--([^-]*)----([^-]*)----([^-]*)----([^-]*)----$";
+            WritePattern = "--RI--{0}----{1}----{2}----{3}----";
+        }
+
+        public override RecordInfo Read(string infoString)
+        {
+            RecordInfo info = new RecordInfo();
+            var match = Regex.Match(infoString, ReadPattern);
+            if (!string.IsNullOrEmpty(match.Groups[1].Value))
+                info.Start = DateTime.Parse(match.Groups[1].Value);
+            if (!string.IsNullOrEmpty(match.Groups[2].Value))
+                info.Stop = DateTime.Parse(match.Groups[2].Value);
+
+            return info;
+        }
+
+        public override string Write(RecordInfo info)
+        {
+            return string.Format(WritePattern,
+                    info.Start.HasValue ? info.Start.Value.ToString("yyyy/MM/dd HH:mm:ss") : null,
+                    info.Stop.HasValue ? info.Stop.Value.ToString("yyyy/MM/dd HH:mm:ss") : null,
+                    info.SpanStr,
+                    info.TotalMonthLateStr
+                    );
+        }
     }
 }

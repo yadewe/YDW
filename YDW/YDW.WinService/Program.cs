@@ -13,6 +13,10 @@ namespace YDW.WinService
         /// </summary>
         static void Main()
         {
+            //var a= new RecordFile();
+            //a.Init();
+            //a.Save();
+            //return;
             //new Service1().Startss();
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
