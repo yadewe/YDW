@@ -54,6 +54,8 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="RecordService\RecordFile.cs" />
+    <Compile Include="RecordService\RecordInfo.cs" />
+    <Compile Include="RecordService\RecordReader.cs" />
     <Compile Include="RecordService\RecordService.cs">
       <SubType>Component</SubType>
     </Compile>
