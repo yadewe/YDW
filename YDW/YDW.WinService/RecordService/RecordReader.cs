@@ -8,6 +8,8 @@ namespace YDW.WinService
 {
     public abstract class RecordReader
     {
+        public string Title;
+
         protected string ReadPattern;
         protected string WritePattern;
 
@@ -135,6 +137,15 @@ namespace YDW.WinService
             repeatChar = 'o';
             ReadPattern = "--RI5--([^-]*)----([^-]*)----([^-]*)----([^-]*)----$";
             WritePattern = "--RI5--{0}----{1}----{2}----{3}----";
+        }
+    }
+    public class Reader6 : Reader3
+    {
+        public Reader6()
+        {
+            Title = "--Tag--_______开机时间_______----______关机时间_______----一天用时----_迟到累计_----";
+            ReadPattern = "--RI1--([^-]*)----([^-]*)----([^-]*)----([^-]*)----$";
+            WritePattern = "--RI1--{0}----{1}----{2}----{3}----";
         }
     }
 }

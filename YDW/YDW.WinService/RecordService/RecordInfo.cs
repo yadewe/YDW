@@ -7,6 +7,8 @@ namespace YDW.WinService
 {
     public class RecordInfo
     {
+        public static string Title { get { return _readers[0].Title; } }
+
         public bool IsRemark { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? Stop { get; set; }
@@ -100,6 +102,7 @@ namespace YDW.WinService
         }
 
         private static readonly RecordReader[] _readers =  {
+            new Reader6(),
             new Reader3(),
             //new Reader5(),
             //new Reader4(),
@@ -112,6 +115,11 @@ namespace YDW.WinService
         public static bool IsRecordInfo(string infoString)
         {
             return _readers.Any(p => p.IsMatch(infoString));
+        }
+
+        public static bool IsTitle(string infoString)
+        {
+            return _readers.Any(p => p.Title == infoString);
         }
 
         public RecordInfo()

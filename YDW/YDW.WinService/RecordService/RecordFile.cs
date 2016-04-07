@@ -30,7 +30,7 @@ namespace YDW.WinService
             }
             var lines = File.ReadAllLines(path);
             //Items = new List<RecordInfo>(lines.Where(p => RecordInfo.IsRecordInfo(p)).Select(p => new RecordInfo(p)));
-            Items = new List<RecordInfo>(lines.Select(p => new RecordInfo(p)));
+            Items = new List<RecordInfo>(lines.Where(p => !RecordInfo.IsTitle(p)).Select(p => new RecordInfo(p)));
             //if (Items.Any())
             //    Items.Sort((x, y) => x.Start < y.Start ? 1 : (x.Start == y.Start ? 0 : -1));
             //else
@@ -96,7 +96,9 @@ namespace YDW.WinService
 
         public void Save()
         {
-            File.WriteAllLines(path, Items.Select(p => p.ToString()));
+            var result = new List<RecordInfo>(Items);
+            result.Insert(0, new RecordInfo(RecordInfo.Title));
+            File.WriteAllLines(path, result.Select(p => p.ToString()));
         }
 
         private void AddItem()
